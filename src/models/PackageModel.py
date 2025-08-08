@@ -33,6 +33,7 @@ class OutputImage(Output):
     class Config:
         title = "Image"
 
+
 class Degree(Config):
     """
         Positive degree input
@@ -70,8 +71,6 @@ class Height(Config):
 
     class Config:
         title = "Height"
-
-
 
 
 class KeepSideFalse(Config):
@@ -138,6 +137,7 @@ class BlurTypes(Config):
 
 class GrayExampleExecutorInputs(Inputs):
     inputImage: InputImage
+
 class GrayExampleExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
@@ -175,9 +175,12 @@ class BlurResponse(Response):
 
 class ScallingInputs(Inputs):
     inputImage: InputImage
+    inputImageA: InputImage
+
 class ScallingConfigs(Configs):
     width:Width
     height:Height
+
 class ScallingRequest(Request):
     inputs: Optional[ScallingInputs]
     configs: ScallingConfigs
@@ -188,6 +191,7 @@ class ScallingRequest(Request):
         }
 class ScallingOutputs(Outputs):
     outputImage: OutputImage
+    outputImageA: OutputImage
 class ScallingResponse(Response):
     outputs: ScallingOutputs
 
@@ -218,6 +222,7 @@ class Blur(Config):
                 "value": 0
             }
         }
+
 class Scalling(Config):
     name: Literal["Scalling"] = "Scalling"
     value: Union[ScallingRequest, ScallingResponse]

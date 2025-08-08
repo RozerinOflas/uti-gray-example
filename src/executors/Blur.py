@@ -16,7 +16,6 @@ class Blur(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
-        self.rotation_degree = self.request.get_param("Degree")
         self.blurTypes = self.request.get_param("blurTypes")
         print("self.blurTypes = ", self.blurTypes)
         self.image = self.request.get_param("inputImage")

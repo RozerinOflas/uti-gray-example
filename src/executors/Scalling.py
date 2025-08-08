@@ -17,18 +17,20 @@ class Scalling(Component):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
         self.width = self.request.get_param("Width")
+        print("width:", self.width)
         self.height = self.request.get_param("Height")
+        print("height:", self.height)
         self.image = self.request.get_param("inputImage")
     @staticmethod
     def bootstrap(config: dict) -> dict:
         return {}
 
     def scaling(self, image):
-        return cv2.resize(image, (int(self.width), int(self.height)))
+        return cv2.resize(image,(self.width,self.height))
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.Scalling(img.value)
+        img.value = self.scaling(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_responseScale(context=self)
         return packageModel
