@@ -55,8 +55,6 @@ class KeepSideFalse(Config):
 
     class Config:
         title = "Disable"
-
-
 class KeepSideTrue(Config):
     name: Literal["True"] = "True"
     value: Literal[True] = True
@@ -65,8 +63,6 @@ class KeepSideTrue(Config):
 
     class Config:
         title = "Enable"
-
-
 class KeepSideBBox(Config):
     """
         Rotate image without catting off sides.
@@ -119,11 +115,9 @@ class BlurTypes(Config):
 
 class GrayExampleExecutorInputs(Inputs):
     inputImage: InputImage
-
 class GrayExampleExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
-
 class GrayExampleExecutorRequest(Request):
     inputs: Optional[GrayExampleExecutorInputs]
     configs: GrayExampleExecutorConfigs
@@ -132,20 +126,16 @@ class GrayExampleExecutorRequest(Request):
         json_schema_extra = {
             "target": "configs"
         }
-
 class GrayExampleExecutorOutputs(Outputs):
     outputImage: OutputImage
-
 class GrayExampleExecutorResponse(Response):
     outputs: GrayExampleExecutorOutputs
 
 
 class BlurInputs(Inputs):
     inputImage: InputImage
-
 class BlurConfigs(Configs):
     blurTypes:BlurTypes
-
 class BlurRequest(Request):
     inputs: Optional[BlurInputs]
     configs: BlurConfigs
@@ -154,12 +144,29 @@ class BlurRequest(Request):
         json_schema_extra = {
             "target": "configs"
         }
-
 class BlurOutputs(Outputs):
     outputImage: OutputImage
-
 class BlurResponse(Response):
     outputs: BlurOutputs
+
+
+class ScallingInputs(Inputs):
+    inputImage: InputImage
+class ScallingConfigs(Configs):
+    width:Width
+    height:Height
+class ScallingRequest(Request):
+    inputs: Optional[ScallingInputs]
+    configs: ScallingConfigs
+
+    class Config:
+        json_schema_extra = {
+            "target": "configs"
+        }
+class ScallingOutputs(Outputs):
+    outputImage: OutputImage
+class ScallingResponse(Response):
+    outputs: ScallingOutputs
 
 
 class GrayExampleExecutor(Config):
@@ -175,8 +182,6 @@ class GrayExampleExecutor(Config):
                 "value": 0
             }
         }
-
-
 class Blur(Config):
     name: Literal["Blur"] = "Blur"
     value: Union[BlurRequest, BlurResponse]
@@ -194,15 +199,13 @@ class Blur(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[GrayExampleExecutor,Blur]
+    value: Union[GrayExampleExecutor,Blur,Scalling]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
 
     class Config:
         title = "Type"
-
-
 class PackageConfigs(Configs):
     executor: ConfigExecutor
 
