@@ -220,10 +220,11 @@ class ScallingRequest(Request):
         json_schema_extra = {
             "target": "configs"
         }
-        
+
 class ScallingOutputs(Outputs):
     outputImage: OutputImage
     outputImageA: OutputImageA
+
 class ScallingResponse(Response):
     outputs: ScallingOutputs
 
