@@ -29,6 +29,7 @@ def build_response2(context):
 
 def build_responseScale(context):
     outputImage = OutputImage(value=context.image)
+    outputImageA = OutputImageA(value=context.image)
     scallingOutputs = ScallingOutputs(outputImage=outputImage)
     scallingResponse = ScallingResponse(outputs=scallingOutputs)
     scalling = Scalling(value=scallingResponse)
