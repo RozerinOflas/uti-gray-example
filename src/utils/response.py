@@ -17,10 +17,10 @@ def build_response(context):
 
 def build_response2(context):
     outputImage = OutputImage(value=context.image)
-    BlurOutputs = BlurOutputs(outputImage=outputImage)
-    BlurResponse = BlurResponse(outputs=BlurOutputs)
-    Blur = Blur(value=BlurResponse)
-    executor = ConfigExecutor(value=Blur)
+    blurOutputs = BlurOutputs(outputImage=outputImage)
+    blurResponse = BlurResponse(outputs=blurOutputs)
+    blur = Blur(value=blurResponse)
+    executor = ConfigExecutor(value=blur)
     packageConfigs = PackageConfigs(executor=executor)
     package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)
     packageModel = package.build_model(context)
