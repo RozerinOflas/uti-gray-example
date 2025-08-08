@@ -1,6 +1,6 @@
 
 from sdks.novavision.src.helper.package import PackageHelper
-from components.GrayExample.src.models.PackageModel import PackageModel, PackageConfigs,ConfigExecutor, GrayExampleExecutor, GrayExampleExecutorOutputs, GrayExampleExecutorResponse, Blur, BlurOutputs, BlurResponse, Scalling, ScallingOutputs,ScallingResponse,OutputImage
+from components.GrayExample.src.models.PackageModel import PackageModel, PackageConfigs,ConfigExecutor, GrayExampleExecutor, GrayExampleExecutorOutputs, GrayExampleExecutorResponse, Blur, BlurOutputs, BlurResponse, Scalling, ScallingOutputs,ScallingResponse,OutputImage,OutputImageA
 
 
 def build_response(context):
