@@ -123,12 +123,9 @@ class ConfigParams(Config):
 class GrayExampleExecutorInputs(Inputs):
     inputImage: InputImage
 
-
-
 class GrayExampleExecutorConfigs(Configs):
     degree: Degree
     drawBBox: KeepSideBBox
-
 
 class GrayExampleExecutorRequest(Request):
     inputs: Optional[GrayExampleExecutorInputs]
@@ -142,21 +139,15 @@ class GrayExampleExecutorRequest(Request):
 class GrayExampleExecutorOutputs(Outputs):
     outputImage: OutputImage
 
-
 class GrayExampleExecutorResponse(Response):
     outputs: GrayExampleExecutorOutputs
+
 
 class Gray2Inputs(Inputs):
     inputImage: InputImage
 
-
 class Gray2Configs(Configs):
     configParams:ConfigParams
-
-
-class Gray2Outputs(Outputs):
-    outputImage: OutputImage
-
 
 class Gray2Request(Request):
     inputs: Optional[Gray2Inputs]
@@ -166,6 +157,9 @@ class Gray2Request(Request):
         json_schema_extra = {
             "target": "configs"
         }
+
+class Gray2Outputs(Outputs):
+    outputImage: OutputImage
 
 class Gray2Response(Response):
     outputs: Gray2Outputs
@@ -201,10 +195,9 @@ class Gray2(Config):
         }
 
 
-
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[Gray2]
+    value: Union[GrayExampleExecutor,Gray2]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
