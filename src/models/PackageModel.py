@@ -209,7 +209,7 @@ class ConfigExecutor(Config):
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
     class Config:
-        title = "Task"
+        title = "Type"
 
 
 class PackageConfigs(Configs):
