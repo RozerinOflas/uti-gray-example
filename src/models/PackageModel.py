@@ -58,7 +58,6 @@ class Width(Config):
 
     class Config:
         title = "Width"
-
 class Height(Config):
     """
         Positive height input
@@ -126,8 +125,6 @@ class BlurrGaussian(Config):
 
     class Config:
         title = "BlurrGaussian"
-
-
 class BlurTypes(Config):
     name: Literal["BlurTypes"] = "BlurTypes"
     value: Union[BlurrGaussian, BlurrMedian]
@@ -216,6 +213,19 @@ class Blur(Config):
 
     class Config:
         title = "Blur"
+        json_schema_extra = {
+            "target": {
+                "value": 0
+            }
+        }
+class Scalling(Config):
+    name: Literal["Scalling"] = "Scalling"
+    value: Union[ScallingRequest, ScallingResponse]
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Scalling"
         json_schema_extra = {
             "target": {
                 "value": 0
