@@ -23,6 +23,7 @@ class Blur(Component):
     @staticmethod
     def bootstrap(config: dict) -> dict:
         return {}
+
     def Bluring(self,img):
         if self.blurTypes==BlurrGaussian:
             img = cv2.GaussianBlur(img,self.blurTypes)

@@ -46,6 +46,34 @@ class Degree(Config):
     class Config:
         title = "Degreee"
 
+class Width(Config):
+    """
+        Positive width input
+    """
+    name: Literal["Width"] = "Width"
+    value: int = Field(ge=-359.0, le=359.0,default=0)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+
+    class Config:
+        title = "Width"
+
+class Height(Config):
+    """
+        Positive height input
+    """
+    name: Literal["Height"] = "Height"
+    value: int = Field(ge=-359.0, le=359.0,default=0)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+
+    class Config:
+        title = "Height"
+
+
+
 
 class KeepSideFalse(Config):
     name: Literal["False"] = "False"
@@ -87,8 +115,6 @@ class BlurrMedian(Config):
 
     class Config:
         title = "BlurrMedian"
-
-
 class BlurrGaussian(Config):
     """
         Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
