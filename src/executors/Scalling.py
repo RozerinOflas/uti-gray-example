@@ -31,12 +31,13 @@ class Scalling(Component):
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        outputImage = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
-
+        imgA = Image.get_frame(img=self.image2, redis_db=self.redis_db)
         img.value = self.scaling(img.value)
-        outputImageA = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
+        imgA.value = self.scaling(imgA.value)
+        self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
+        self.imageA = Image.set_frame(img=imgA, package_uID=self.uID, redis_db=self.redis_db)
 
-        packageModel = build_responseScale(context=self, output_images=[outputImage, outputImageA])
+        packageModel = build_responseScale(context=self, output_images=[])
         return packageModel
 
 

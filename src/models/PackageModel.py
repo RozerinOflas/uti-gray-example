@@ -17,9 +17,9 @@ class InputImage(Input):
 
     class Config:
         title = "Image"
-class OutputImage(Output):
-    name: Literal["outputImage"] = "outputImage"
-    value: Union[List[Image],Image]
+class InputImageA(Input):
+    name: Literal["inputImageA"] = "inputImageA"
+    value: Union[List[Image], Image]
     type: str = "object"
 
     @validator("type", pre=True, always=True)
@@ -33,9 +33,9 @@ class OutputImage(Output):
     class Config:
         title = "Image"
 
-class InputImageA(Input):
-    name: Literal["inputImageA"] = "inputImageA"
-    value: Union[List[Image], Image]
+class OutputImage(Output):
+    name: Literal["outputImage"] = "outputImage"
+    value: Union[List[Image],Image]
     type: str = "object"
 
     @validator("type", pre=True, always=True)
@@ -62,7 +62,7 @@ class OutputImageA(Output):
             return "list"
 
     class Config:
-        title = "Image"
+        title = "ImageA"
 
 
 class Degree(Config):
