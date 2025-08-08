@@ -1,4 +1,3 @@
-
 import os
 import cv2
 import sys
@@ -16,17 +15,18 @@ class Scalling(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
-        self.width = self.request.get_param("Width")
+        self.width = int(self.request.get_param("Width"))
         print("width:", self.width)
-        self.height = self.request.get_param("Height")
+        self.height = int(self.request.get_param("Height"))
         print("height:", self.height)
         self.image = self.request.get_param("inputImage")
+
     @staticmethod
     def bootstrap(config: dict) -> dict:
         return {}
 
     def scaling(self, image):
-        return cv2.resize(image,(int(self.width),(self.height)))
+        return cv2.resize(image, (self.width, self.height))
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
@@ -36,5 +36,5 @@ class Scalling(Component):
         return packageModel
 
 
-if "__main__" == __name__:
+if __name__ == "__main__":
     Executor(sys.argv[1]).run()
