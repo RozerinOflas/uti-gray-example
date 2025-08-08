@@ -69,22 +69,48 @@ class KeepSideBBox(Config):
         title = "Keep Sides"
 
 
-class Degree(Config):
+class BlurrMedian(Config):
     """
-        Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
+        Positive
     """
-    name: Literal["Degree"] = "Degree"
+    name: Literal["BlurrMedian"] = "BlurrMedian"
     value: int = Field(ge=-359.0, le=359.0,default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
     placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
 
     class Config:
-        title = "Degree"
+        title = "BlurrMedian"
 
 
-class GrayExampleExecutorInputs(Inputs):
+class BlurrGaussian(Config):
+    """
+        Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
+    """
+    name: Literal["BlurrGaussian"] = "BlurrGaussian"
+    value: int = Field(ge=-359.0, le=359.0,default=0)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+
+    class Config:
+        title = "BlurrGaussian"
+
+
+class ConfigParams(Param):
+    name: Literal["ConfigParams"] = "ConfigParams"
+    value: Union[BlurrGaussian, BlurrMedian]
+    type: Literal["object"] = "object"
+    field: Literal["dropdownlist"] = "dropdownlist"
+
+    class Config:
+        title = "BlurrType"
+
+
+
+class GrayExampleExecutorI0nputs(Inputs):
     inputImage: InputImage
+
 
 
 class GrayExampleExecutorConfigs(Configs):
@@ -108,6 +134,30 @@ class GrayExampleExecutorOutputs(Outputs):
 class GrayExampleExecutorResponse(Response):
     outputs: GrayExampleExecutorOutputs
 
+class Gray2Inputs(Inputs):
+    inputImage: InputImage
+
+
+class Gray2Configs(Configs):
+    configParams:ConfigParams
+
+
+class Gray2Outputs(Outputs):
+    outputImage: OutputImage
+
+
+class Gray2Request(Request):
+    inputs: Optional[Gray2Inputs]
+    configs: Gray2Configs
+
+    class Config:
+        json_schema_extra = {
+            "target": "configs"
+        }
+
+class Gray2Response(Response):
+    outputs: Gray2Outputs
+
 
 class GrayExampleExecutor(Config):
     name: Literal["GrayExampleExecutor"] = "GrayExampleExecutor"
@@ -124,17 +174,30 @@ class GrayExampleExecutor(Config):
         }
 
 
+class Gray2(Config):
+    name: Literal["Gray2"] = "Gray2"
+    value: Union[Gray2Request, Gray2Response]
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
+
+    class Config:
+        title = "Package"
+        json_schema_extra = {
+            "target": {
+                "value": 0
+            }
+        }
+
+
+
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[GrayExampleExecutor]
+    value: Union[GrayExampleExecutor,Gray2]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
     class Config:
         title = "Task"
-        json_schema_extra = {
-            "target": "value"
-        }
 
 
 class PackageConfigs(Configs):
