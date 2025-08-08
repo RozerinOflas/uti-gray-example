@@ -97,7 +97,7 @@ class BlurrGaussian(Config):
         title = "BlurrGaussian"
 
 
-class ConfigParams(Param):
+class ConfigParams(Config):
     name: Literal["ConfigParams"] = "ConfigParams"
     value: Union[BlurrGaussian, BlurrMedian]
     type: Literal["object"] = "object"
