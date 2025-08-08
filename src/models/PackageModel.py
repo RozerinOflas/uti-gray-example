@@ -120,7 +120,7 @@ class ConfigParams(Config):
 
 
 
-class GrayExampleExecutorI0nputs(Inputs):
+class GrayExampleExecutorInputs(Inputs):
     inputImage: InputImage
 
 
