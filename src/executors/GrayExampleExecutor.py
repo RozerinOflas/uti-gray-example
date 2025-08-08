@@ -51,6 +51,7 @@ class GrayExampleExecutor(Component):
 
     def gray(self,img):
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        return img_gray
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
