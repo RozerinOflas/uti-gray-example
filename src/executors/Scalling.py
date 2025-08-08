@@ -20,6 +20,7 @@ class Scalling(Component):
         self.height = int(self.request.get_param("Height"))
         print("height:", self.height)
         self.image = self.request.get_param("inputImage")
+        self.imageA = self.request.get_param("inputImageA")
 
     @staticmethod
     def bootstrap(config: dict) -> dict:
@@ -30,9 +31,12 @@ class Scalling(Component):
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
+        outputImage = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
+
         img.value = self.scaling(img.value)
-        self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
-        packageModel = build_responseScale(context=self)
+        outputImageA = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
+
+        packageModel = build_responseScale(context=self, output_images=[outputImage, outputImageA])
         return packageModel
 
 
