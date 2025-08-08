@@ -206,11 +206,7 @@ class BlurResponse(Response):
 
 class ScallingInputs(Inputs):
     inputImage: InputImage
-    inputImageA: InputImage
-    value: str
-    type: Literal["object"] = "object"
-    field: Literal["input"] = "input"
-
+    inputImageA: InputImageA
 
 class ScallingConfigs(Configs):
     width:Width
@@ -224,9 +220,10 @@ class ScallingRequest(Request):
         json_schema_extra = {
             "target": "configs"
         }
+        
 class ScallingOutputs(Outputs):
     outputImage: OutputImage
-    outputImageA: OutputImage
+    outputImageA: OutputImageA
 class ScallingResponse(Response):
     outputs: ScallingOutputs
 
