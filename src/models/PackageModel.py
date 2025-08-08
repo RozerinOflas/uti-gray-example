@@ -175,8 +175,6 @@ class BlurResponse(Response):
 
 class ScallingInputs(Inputs):
     inputImage: InputImage
-    inputImageA: InputImage
-
 class ScallingConfigs(Configs):
     width:Width
     height:Height
@@ -191,7 +189,6 @@ class ScallingRequest(Request):
         }
 class ScallingOutputs(Outputs):
     outputImage: OutputImage
-    outputImageA: OutputImage
 class ScallingResponse(Response):
     outputs: ScallingOutputs
 
