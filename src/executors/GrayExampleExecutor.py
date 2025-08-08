@@ -49,13 +49,9 @@ class GrayExampleExecutor(Component):
 
             return img_rotation
 
-    def gray(self,img):
-        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        return img_gray
-
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.gray(img.value)
+        img.value = self.rotation(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response(context=self)
         return packageModel

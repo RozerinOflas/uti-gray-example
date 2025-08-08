@@ -106,14 +106,14 @@ class BlurrGaussian(Config):
         title = "BlurrGaussian"
 
 
-class ConfigParams(Config):
-    name: Literal["ConfigParams"] = "ConfigParams"
+class BlurTypes(Config):
+    name: Literal["BlurTypes"] = "BlurTypes"
     value: Union[BlurrGaussian, BlurrMedian]
     type: Literal["object"] = "object"
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
-        title = "ConfigParams"
+        title = "BlurTypes"
 
 
 
@@ -144,7 +144,7 @@ class BlurInputs(Inputs):
     inputImage: InputImage
 
 class BlurConfigs(Configs):
-    configParams:ConfigParams
+    blurTypes:BlurTypes
 
 class BlurRequest(Request):
     inputs: Optional[BlurInputs]

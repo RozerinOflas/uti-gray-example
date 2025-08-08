@@ -17,8 +17,8 @@ class Blur(Component):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
         self.rotation_degree = self.request.get_param("Degree")
-        self.configParams = self.request.get_param("ConfigParams")
-        print("self.configParams = ", self.configParams)
+        self.blurTypes = self.request.get_param("blurTypes")
+        print("self.blurTypes = ", self.blurTypes)
         self.image = self.request.get_param("inputImage")
 
     @staticmethod
@@ -26,9 +26,9 @@ class Blur(Component):
         return {}
 
     def Bluring(self,img):
-        if self.configParams==BlurrGaussian:
+        if self.blurTypes==BlurrGaussian:
             pass
-        elif self.configParams==BlurrMedian:
+        elif self.blurTypes==BlurrMedian:
             pass
 
         return
