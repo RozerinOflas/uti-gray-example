@@ -49,7 +49,7 @@ class Scalling(Component):
         imgA.value = self.scaling(imgA.value)
         self.imageA = Image.set_frame(img=imgA, package_uID=self.uID, redis_db=self.redis_db)
 
-        packageModel = build_responseScale(context=self)
+        packageModel = build_responseScale(context=(self.image, self.imageA))
         return packageModel
 
 
