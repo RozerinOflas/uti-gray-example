@@ -33,6 +33,37 @@ class OutputImage(Output):
     class Config:
         title = "Image"
 
+class InputImageA(Input):
+    name: Literal["inputImageA"] = "inputImageA"
+    value: Union[List[Image], Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image"
+class OutputImageA(Output):
+    name: Literal["outputImageA"] = "outputImageA"
+    value: Union[List[Image],Image]
+    type: str = "object"
+
+    @validator("type", pre=True, always=True)
+    def set_type_based_on_value(cls, value, values):
+        value = values.get('value')
+        if isinstance(value, Image):
+            return "object"
+        elif isinstance(value, list):
+            return "list"
+
+    class Config:
+        title = "Image"
+
 
 class Degree(Config):
     """
@@ -157,7 +188,6 @@ class GrayExampleExecutorResponse(Response):
 
 class BlurInputs(Inputs):
     inputImage: InputImage
-
 class BlurConfigs(Configs):
     blurTypes:BlurTypes
 class BlurRequest(Request):
@@ -177,6 +207,11 @@ class BlurResponse(Response):
 class ScallingInputs(Inputs):
     inputImage: InputImage
     inputImageA: InputImage
+    value: str
+    type: Literal["object"] = "object"
+    field: Literal["input"] = "input"
+
+
 class ScallingConfigs(Configs):
     width:Width
     height:Height
