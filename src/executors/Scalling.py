@@ -31,6 +31,17 @@ class Scalling(Component):
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
+        print("img:", img)
+        print("img.value:", img.value)
+        print("img.value type:", type(img.value))
+
+        if img.value is None:
+            raise ValueError("img.value is None - inputImage might be invalid or not found in redis")
+
+        img.value = self.scaling(img.value)
+
+
+        img = Image.get_frame(img=self.image, redis_db=self.redis_db)
         img.value = self.scaling(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
 
@@ -38,7 +49,7 @@ class Scalling(Component):
         imgA.value = self.scaling(imgA.value)
         self.imageA = Image.set_frame(img=imgA, package_uID=self.uID, redis_db=self.redis_db)
 
-        packageModel = build_responseScale(context=self, output_images=[self.image, self.imageA])
+        packageModel = build_responseScale(context=self)
         return packageModel
 
 
