@@ -86,10 +86,9 @@ class BlurrMedian(Config):
         Positive
     """
     name: Literal["BlurrMedian"] = "BlurrMedian"
-    value: int = Field(ge=-359.0, le=359.0,default=0)
-    type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+    value: Literal["BlurrMedian"] = "BlurrMedian"
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
 
     class Config:
         title = "BlurrMedian"
@@ -100,10 +99,9 @@ class BlurrGaussian(Config):
         Positive angles specify counterclockwise rotation while negative angles indicate clockwise rotation.
     """
     name: Literal["BlurrGaussian"] = "BlurrGaussian"
-    value: int = Field(ge=-359.0, le=359.0,default=0)
-    type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+    value: Literal["BlurrGaussian"] = "BlurrGaussian"
+    type: Literal["object"] = "object"
+    field: Literal["option"] = "option"
 
     class Config:
         title = "BlurrGaussian"
@@ -116,7 +114,7 @@ class ConfigParams(Config):
     field: Literal["dropdownlist"] = "dropdownlist"
 
     class Config:
-        title = "BlurrType"
+        title = "ConfigParams"
 
 
 
@@ -172,7 +170,7 @@ class GrayExampleExecutor(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Package"
+        title = "Gray"
         json_schema_extra = {
             "target": {
                 "value": 0
@@ -187,7 +185,7 @@ class Blur(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Package"
+        title = "Blur"
         json_schema_extra = {
             "target": {
                 "value": 0
