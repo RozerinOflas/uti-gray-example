@@ -143,26 +143,26 @@ class GrayExampleExecutorResponse(Response):
     outputs: GrayExampleExecutorOutputs
 
 
-class Gray2Inputs(Inputs):
+class BlurInputs(Inputs):
     inputImage: InputImage
 
-class Gray2Configs(Configs):
+class BlurConfigs(Configs):
     configParams:ConfigParams
 
-class Gray2Request(Request):
-    inputs: Optional[Gray2Inputs]
-    configs: Gray2Configs
+class BlurRequest(Request):
+    inputs: Optional[BlurInputs]
+    configs: BlurConfigs
 
     class Config:
         json_schema_extra = {
             "target": "configs"
         }
 
-class Gray2Outputs(Outputs):
+class BlurOutputs(Outputs):
     outputImage: OutputImage
 
-class Gray2Response(Response):
-    outputs: Gray2Outputs
+class BlurResponse(Response):
+    outputs: BlurOutputs
 
 
 class GrayExampleExecutor(Config):
@@ -180,9 +180,9 @@ class GrayExampleExecutor(Config):
         }
 
 
-class Gray2(Config):
-    name: Literal["Gray2"] = "Gray2"
-    value: Union[Gray2Request, Gray2Response]
+class Blur(Config):
+    name: Literal["Blur"] = "Blur"
+    value: Union[BlurRequest, BlurResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
@@ -197,7 +197,7 @@ class Gray2(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[GrayExampleExecutor,Gray2]
+    value: Union[GrayExampleExecutor,Blur]
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
     restart: Literal[True] = True
