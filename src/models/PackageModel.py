@@ -17,8 +17,6 @@ class InputImage(Input):
 
     class Config:
         title = "Image"
-
-
 class OutputImage(Output):
     name: Literal["outputImage"] = "outputImage"
     value: Union[List[Image],Image]
@@ -37,7 +35,7 @@ class OutputImage(Output):
 
 class Degree(Config):
     """
-        Positive
+        Positive degree input
     """
     name: Literal["Degree"] = "Degree"
     value: int = Field(ge=-359.0, le=359.0,default=0)
@@ -46,7 +44,8 @@ class Degree(Config):
     placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
 
     class Config:
-        title = "Degreeeeee"
+        title = "Degreee"
+
 
 class KeepSideFalse(Config):
     name: Literal["False"] = "False"
@@ -170,7 +169,7 @@ class GrayExampleExecutor(Config):
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Gray"
+        title = "Rotation"
         json_schema_extra = {
             "target": {
                 "value": 0
