@@ -26,7 +26,7 @@ class Scalling(Component):
         return {}
 
     def scaling(self, image):
-        return cv2.resize(image,(int(self.width,self.height)))
+        return cv2.resize(image,(int(self.width),(self.height)))
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
