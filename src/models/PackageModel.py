@@ -35,6 +35,18 @@ class OutputImage(Output):
     class Config:
         title = "Image"
 
+class Degree(Config):
+    """
+        Positive
+    """
+    name: Literal["Degree"] = "Degree"
+    value: int = Field(ge=-359.0, le=359.0,default=0)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+
+    class Config:
+        title = "Degreeeeee"
 
 class KeepSideFalse(Config):
     name: Literal["False"] = "False"
