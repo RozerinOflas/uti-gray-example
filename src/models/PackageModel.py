@@ -119,10 +119,9 @@ class KernelSize(Config):
     KernelSize input
     """
     name: Literal["KernelSize"] = "KernelSize"
-    value: Union[Kernel3x3, Kernel5x5, Kernel7x7]
-    type: Literal["object"] = "object"
-    field: Literal["dropdownlist"] = "dropdownlist"
-
+    value: int = Field(default=0)
+    type: Literal["number"] = "number"
+    field: Literal["option"] = "option"
     class Config:
         title = "KernelSize"
 
@@ -236,7 +235,6 @@ class BlurInputs(Inputs):
 class BlurConfigs(Configs):
     blurTypes:BlurTypes
     kernelSize:KernelSize
-    sigmaX:SigmaX
 
 class BlurRequest(Request):
     inputs: Optional[BlurInputs]
