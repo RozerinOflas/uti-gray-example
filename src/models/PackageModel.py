@@ -77,42 +77,7 @@ class Degree(Config):
     class Config:
         title = "Degreee"
 
-class SigmaX(Config):
-    """
-    SigmaX input
-    """
-    name: Literal["SigmaX"] = "SigmaX"
-    value: int = Field(ge=0, le=10, default=4)
-    type: Literal["number"] = "number"
-    field: Literal["textInput"] = "textInput"
 
-    class Config:
-        title = "sigmax"
-
-
-class Kernel3x3(Config):
-    name: Literal["Kernel3x3"] = "Kernel3x3"
-    value:Literal["Kernel3x3"] = "Kernel3x3"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Kernel3x3"
-class Kernel5x5(Config):
-    name: Literal["Kernel5x5"] = "Kernel5x5"
-    value:Literal["Kernel5x5"] = "Kernel5x5"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-
-    class Config:
-        title = "Kernel5x5"
-class Kernel7x7(Config):
-    name: Literal["Kernel7x7"] = "Kernel7x7"
-    value:Literal["Kernel7x7"] = "Kernel7x7"
-    type: Literal["string"] = "string"
-    field: Literal["option"] = "option"
-    class Config:
-        title = "Kernel7x7"
 
 class KernelSize(Config):
     """"
@@ -121,7 +86,7 @@ class KernelSize(Config):
     name: Literal["KernelSize"] = "KernelSize"
     value: int = Field(default=0)
     type: Literal["number"] = "number"
-    field: Literal["option"] = "option"
+    field: Literal["textInput"] = "textInput"
     class Config:
         title = "KernelSize"
 
