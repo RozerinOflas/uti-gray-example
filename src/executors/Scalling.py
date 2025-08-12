@@ -30,27 +30,41 @@ class Scalling(Component):
         if image is None:
             raise ValueError("Empty image data cannot be processed.")
 
-        if isinstance(image, np.ndarray):
-            if image.size == 0:
-                raise ValueError("Empty ndarray image cannot be processed.")
-            resized = cv2.resize(image, (self.width, self.height))
-            return resized
-
-        elif isinstance(image, (str, bytes)):
-            if not image:
-                raise ValueError("Empty base64 image string cannot be processed.")
+        # Base64 string veya bytes ise decode et
+        if isinstance(image, (str, bytes)):
             if isinstance(image, str):
                 image = image.encode()
             img_data = base64.b64decode(image)
             np_arr = np.frombuffer(img_data, np.uint8)
-            img_cv = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-            if img_cv is None or img_cv.size == 0:
+            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            if image is None or image.size == 0:
                 raise ValueError("Decoded image is empty or invalid.")
-            resized = cv2.resize(img_cv, (self.width, self.height))
-            return resized
 
-        else:
+        if not isinstance(image, np.ndarray):
             raise ValueError("Input to scaling must be base64 string, bytes or ndarray")
+
+        # Orijinal boyutlar
+        orig_height, orig_width = image.shape[:2]
+
+        # Kullanıcının verdiği hedef boyutlar
+        max_width, max_height = self.width, self.height
+
+        # Orijinal en-boy oranı
+        aspect_ratio = orig_width / orig_height
+
+        # Önce max_width ve max_height değerlerine göre bir hedef boyut belirle
+        # Burada orijinal en-boy oranını koruyarak boyutları küçültüyoruz
+        if (max_width / aspect_ratio) <= max_height:
+            # Genişlik sınırına göre yeniden boyutlandır
+            new_width = max_width
+            new_height = int(max_width / aspect_ratio)
+        else:
+            # Yükseklik sınırına göre yeniden boyutlandır
+            new_height = max_height
+            new_width = int(max_height * aspect_ratio)
+
+        resized = cv2.resize(image, (new_width, new_height))
+        return resized
 
     def run(self):
 
