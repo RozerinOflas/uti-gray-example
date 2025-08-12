@@ -55,7 +55,6 @@ class Scalling(Component):
     def run(self):
 
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        print("img.value after get_frame:", type(img.value))
         if img.value is None:
             raise ValueError("img.value is None! ")
 
@@ -63,7 +62,6 @@ class Scalling(Component):
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
 
         imgA = Image.get_frame(img=self.imageA, redis_db=self.redis_db)
-        print("imgA.value after get_frame:", type(imgA.value))
         if imgA.value is None:
             raise ValueError("imgA.value is None! ")
 
