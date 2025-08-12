@@ -11,53 +11,45 @@ from components.GrayExample.src.utils.response import build_response2
 from components.GrayExample.src.models.PackageModel import PackageModel
 
 
-class BlurrGaussian:
-    def __init__(self, kernelSize=3):
-        if kernelSize % 2 == 0:
-            kernelSize += 1
-        self.KernelSize = kernelSize
-
-    def apply(self, img):
-        return cv2.GaussianBlur(img, (self.kernelSize, self.kernelSize), 0)
-
-
-class BlurrMedian:
-    def __init__(self, kernelSize=3):
-        if kernelSize % 2 == 0:
-            kernelSize += 1
-        self.KernelSize = kernelSize
-
-    def apply(self, img):
-        return cv2.medianBlur(img, self.KernelSize)
-
-
 class Blur(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
 
-        self.blur_type = self.request.get_param("blurType")
-        self.KernelSize = int(self.request.get_param("KernelSize", 3))
-        self.image = self.request.get_param("inputImage")
+        self.blur_type = self.request.get_param("blurTypes", "BlurrGaussian")
+        if hasattr(self.blur_type, "value"):
+            self.blur_type = self.blur_type.value
+        self.kernel_size = self.request.get_param("kernelSize", 3)
+        self.sigmaX = self.request.get_param("sigmaX", 0)
 
-        if self.blur_type == "Gaussian":
-            self.blurr = BlurrGaussian(self.KernelSize)
-        elif self.blur_type == "Median":
-            self.blurr = BlurrMedian(self.KernelSize)
+        try:
+            self.kernel_size = int(self.kernel_size)
+            if self.kernel_size % 2 == 0:
+                self.kernel_size += 1
+        except Exception:
+            self.kernel_size = 3
+
+        try:
+            self.sigmaX = float(self.sigmaX)
+        except Exception:
+            self.sigmaX = 0.0
+
+        self.image = self.request.get_param("inputImage")
 
     @staticmethod
     def bootstrap(config: dict) -> dict:
         return {}
 
-    def blur(self, img):
-        if self.blurr:
-            return self.blurr.apply(img)
-        else:
-            return img
-
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.bluring(img.value)
+
+        # Burada direkt blur işlemi uygulanıyor:
+        if self.blur_type.lower() == "blurrgaussian":
+            img.value = cv2.GaussianBlur(img.value, (self.kernel_size, self.kernel_size), self.sigmaX)
+        elif self.blur_type.lower() == "blurrmedian":
+            img.value = cv2.medianBlur(img.value, self.kernel_size)
+        # Diğer blur tipleri için else eklenebilir
+
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response2(context=self)
         return packageModel

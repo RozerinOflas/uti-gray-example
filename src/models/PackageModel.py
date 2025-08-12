@@ -1,6 +1,8 @@
 from pydantic import Field, validator
 from typing import List, Optional, Union, Literal
 from sdks.novavision.src.base.model import Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, Config
+from sympy.physics.quantum.pauli import SigmaX
+
 
 class InputImage(Input):
     name: Literal["inputImage"] = "inputImage"
@@ -70,15 +72,27 @@ class Degree(Config):
         Positive degree input
     """
     name: Literal["Degree"] = "Degree"
-    value: int = Field(ge=-359.0, le=359.0,default=0)
+    value: int = Field(default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
-
     class Config:
         title = "Degreee"
 
+class SigmaX(Config):
+    """
+    SigmaX input
+    """
+    name: Literal["SigmaX"] = "SigmaX"
+    value: int = Field(default=0)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    class Config:
+        title = "SigmaX"
+
 class KernelSize(Config):
+    """"
+    KernelSize input
+    """
     name: Literal["KernelSize"] = "KernelSize"
     value: int = Field(default=0)
     type: Literal["number"] = "number"
@@ -94,8 +108,6 @@ class Width(Config):
     value: int = Field(default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
-    #placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
-
     class Config:
         title = "Width"
 class Height(Config):
@@ -106,8 +118,6 @@ class Height(Config):
     value: int = Field(default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
-    #placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
-
     class Config:
         title = "Height"
 
@@ -200,6 +210,7 @@ class BlurInputs(Inputs):
 class BlurConfigs(Configs):
     blurTypes:BlurTypes
     kernelSize:KernelSize
+    sigmaX:SigmaX
 
 class BlurRequest(Request):
     inputs: Optional[BlurInputs]
