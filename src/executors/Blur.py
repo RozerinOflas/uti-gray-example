@@ -16,16 +16,16 @@ class Blur(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
-        self.blurTypes = self.request.get_param("blurTypes")
+        self.blurTypes = self.request.get_param("BlurTypes")
         if self.blurTypes is None:
             raise ValueError("Blur requires 'blurTypes' parameter.")
-        self.kernelSize = self.request.get_param("kernelSize")
+        self.kernelSize = self.request.get_param("KernelSize")
         if self.kernelSize is None:
             raise ValueError("Blur requires 'kernelSize' parameter.")
-        self.sigmaX = self.request.get_param("sigmaX")
+        self.sigmaX = self.request.get_param("SigmaX")
         if self.sigmaX is None:
             raise ValueError("Blur requires 'sigmaX' parameter.")
-        self.image = self.request.get_param("image")
+        self.image = self.request.get_param("inputImage")
         if self.image is None:
             raise ValueError("Blur requires 'image' parameter.")
 
