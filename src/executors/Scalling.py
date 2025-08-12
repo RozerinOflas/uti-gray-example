@@ -29,17 +29,15 @@ class Scalling(Component):
         return {}
 
     def scaling(self, image):
-        # image base64 string
+        if not image:
+            raise ValueError("Empty image data cannot be processed.")
         if isinstance(image, (str, bytes)):
             if isinstance(image, str):
                 image = image.encode()
             img_data = base64.b64decode(image)
             np_arr = np.frombuffer(img_data, np.uint8)
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-
             resized = cv2.resize(image, (self.width, self.height))
-
-            # sadece ndarray döndür
             return resized
         else:
             raise ValueError("Input to scaling must be base64 string or bytes")
