@@ -29,11 +29,12 @@ class Scalling(Component):
         return {}
 
     def scaling(self, image):
-        def scaling(self, image):
+        if isinstance(image, (str, bytes)):
             if isinstance(image, str):
-                img_data = base64.b64decode(image)
-                np_arr = np.frombuffer(img_data, np.uint8)
-                image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+                image = image.encode()  # str → bytes
+            img_data = base64.b64decode(image)
+            np_arr = np.frombuffer(img_data, np.uint8)
+            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
             resized = cv2.resize(image, (self.width, self.height))
             _, buffer = cv2.imencode(".jpg", resized)
