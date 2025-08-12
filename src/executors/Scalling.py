@@ -18,9 +18,7 @@ class Scalling(Component):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
         self.width = int(self.request.get_param("Width"))
-        print("width:", self.width)
         self.height = int(self.request.get_param("Height"))
-        print("height:", self.height)
         self.image = self.request.get_param("inputImage")
         self.imageA = self.request.get_param("inputImageA")
 
@@ -55,27 +53,23 @@ class Scalling(Component):
             raise ValueError("Input to scaling must be base64 string, bytes or ndarray")
 
     def run(self):
-        print("inputImage param:", self.image)
-        print("inputImageA param:", self.imageA)
 
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
         print("img.value after get_frame:", type(img.value))
         if img.value is None:
-            raise ValueError("img.value is None! inputImage parametresi eksik veya yanlış formatta.")
+            raise ValueError("img.value is None! ")
 
-        img.value = self.scaling(img.value)  # ndarray döner
+        img.value = self.scaling(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
 
         imgA = Image.get_frame(img=self.imageA, redis_db=self.redis_db)
         print("imgA.value after get_frame:", type(imgA.value))
         if imgA.value is None:
-            raise ValueError("imgA.value is None! inputImageA parametresi eksik veya yanlış formatta.")
+            raise ValueError("imgA.value is None! ")
 
-        imgA.value = self.scaling(imgA.value)  # ndarray döner
+        imgA.value = self.scaling(imgA.value)
         self.imageA = Image.set_frame(img=imgA, package_uID=self.uID, redis_db=self.redis_db)
 
-        print("img type:", type(img), "img.value type:", type(img.value))
-        print("imgA type:", type(imgA), "imgA.value type:", type(imgA.value))
 
         packageModel = build_responseScale(context=self)
         return packageModel
