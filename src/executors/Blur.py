@@ -33,9 +33,9 @@ class Blur(Component):
     def bootstrap(config: dict) -> dict:
         return {}
     def blur(self,kernelSize, sigmaX, image, blurTypes):
-        if self.blurTypes == "gaussian":
+        if self.blurTypes == "BlurGaussian":
             return cv2.GaussianBlur(image, (kernelSize, kernelSize), sigmaX).astype(np.uint8)
-        elif self.blurTypes == "median":
+        elif self.blurTypes == "BlurMedian":
             return cv2.medianBlur(image, kernelSize).astype(np.uint8)
         else:
             raise ValueError(f"Unknown blurType: {blurTypes}")
