@@ -31,26 +31,33 @@ class Scalling(Component):
     def scaling(self, image):
         if isinstance(image, (str, bytes)):
             if isinstance(image, str):
-                image = image.encode()  # str → bytes
+                image = image.encode()
             img_data = base64.b64decode(image)
             np_arr = np.frombuffer(img_data, np.uint8)
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
             resized = cv2.resize(image, (self.width, self.height))
-            _, buffer = cv2.imencode(".jpg", resized)
-            return base64.b64encode(buffer).decode("utf-8")
+
+            return resized
+        else:
+            raise ValueError("Input to scaling must be base64 string or bytes")
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        img.value = self.scaling(img.value)
+        img.value = self.scaling(img.value)  # ndarray döner
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
 
         imgA = Image.get_frame(img=self.imageA, redis_db=self.redis_db)
-        imgA.value = self.scaling(imgA.value)
+        imgA.value = self.scaling(imgA.value)  # ndarray döner
         self.imageA = Image.set_frame(img=imgA, package_uID=self.uID, redis_db=self.redis_db)
 
         print("img type:", type(img), "img.value type:", type(img.value))
         print("img2 type:", type(imgA), "img2.value type:", type(imgA.value))
+
+        packageModel = build_responseScale(context=self)
+        return packageModel
+
+
 
 
 if __name__ == "__main__":
