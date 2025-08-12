@@ -42,18 +42,13 @@ class Blur(Component):
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-
-        # Burada direkt blur işlemi uygulanıyor:
         if self.blur_type.lower() == "blurrgaussian":
             img.value = cv2.GaussianBlur(img.value, (self.kernel_size, self.kernel_size), self.sigmaX)
         elif self.blur_type.lower() == "blurrmedian":
             img.value = cv2.medianBlur(img.value, self.kernel_size)
-        # Diğer blur tipleri için else eklenebilir
-
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_response2(context=self)
         return packageModel
-
 
 if __name__ == "__main__":
     Executor(sys.argv[1]).run()
