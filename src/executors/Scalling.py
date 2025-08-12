@@ -29,18 +29,30 @@ class Scalling(Component):
         return {}
 
     def scaling(self, image):
-        if not image:
+        if image is None:
             raise ValueError("Empty image data cannot be processed.")
-        if isinstance(image, (str, bytes)):
+
+        if isinstance(image, np.ndarray):
+            if image.size == 0:
+                raise ValueError("Empty ndarray image cannot be processed.")
+            resized = cv2.resize(image, (self.width, self.height))
+            return resized
+
+        elif isinstance(image, (str, bytes)):
+            if not image:
+                raise ValueError("Empty base64 image string cannot be processed.")
             if isinstance(image, str):
                 image = image.encode()
             img_data = base64.b64decode(image)
             np_arr = np.frombuffer(img_data, np.uint8)
-            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-            resized = cv2.resize(image, (self.width, self.height))
+            img_cv = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            if img_cv is None or img_cv.size == 0:
+                raise ValueError("Decoded image is empty or invalid.")
+            resized = cv2.resize(img_cv, (self.width, self.height))
             return resized
+
         else:
-            raise ValueError("Input to scaling must be base64 string or bytes")
+            raise ValueError("Input to scaling must be base64 string, bytes or ndarray")
 
     def run(self):
         print("inputImage param:", self.image)
