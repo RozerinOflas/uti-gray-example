@@ -16,7 +16,7 @@ class Blur(Component):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
 
-        self.blur_type = self.request.get_param("blurTypes", "BlurrGaussian")
+        self.blurTypes = self.request.get_param("BlurrMedian", None)
         self.kernelSize = self.request.get_param("kernelSize", 3)
         self.sigmaX = self.request.get_param("sigmaX", 0)
 
@@ -40,10 +40,11 @@ class Blur(Component):
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        if self.blur_type.lower() == "blurrGaussian":
+
+        if self.blurTypes.lower() == "blurrgaussian":
             img.value = cv2.GaussianBlur(img.value, (self.kernelSize, self.kernelSize), self.sigmaX)
 
-        elif self.blur_type.lower() == "blurrMedian":
+        elif self.blurTypes.lower() == "blurrmedian":
             img.value = cv2.medianBlur(img.value, self.kernelSize)
 
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
