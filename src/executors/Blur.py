@@ -14,29 +14,29 @@ from components.GrayExample.src.models.PackageModel import PackageModel
 class Blur(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
+        print(self.request.data)
         self.request.model = PackageModel(**(self.request.data))
-
-        self.blurTypes = self.request.get_param("BlurrMedian", None)
         self.kernelSize = self.request.get_param("kernelSize", 3)
-        self.sigmaX = self.request.get_param("sigmaX", 0)
-
-        try:
-            self.kernelSize = int(self.kernelSize)
-            if self.kernelSize % 2 == 0:
-                self.kernelSize += 1
-        except Exception:
-            self.kernelSize = 3
-
-        try:
-            self.sigmaX = float(self.sigmaX)
-        except Exception:
-            self.sigmaX = 0.0
-
+        print(self.kernelSize)
+        self.parameters()
+        self.blurTypes = self.request.get_param("blurrTypes", None)
+        self.sigmaX = self.request.get_param("sigmaX")
         self.image = self.request.get_param("inputImage")
 
     @staticmethod
     def bootstrap(config: dict) -> dict:
         return {}
+
+    def parameters(self):
+        if self.kernelSize == "kernelSize5x5":
+            self.kernelSize = 5
+        elif self.kernelSize == "kernelSize3x3":
+            self.kernelSize = 3
+        else:
+            self.kernelSize = 7
+
+        print("load_self.kernelSize:", self.kernelSize)
+        return self.kernelSize
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
