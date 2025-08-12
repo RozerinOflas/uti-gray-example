@@ -11,8 +11,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../'))
 from sdks.novavision.src.media.image import Image
 from sdks.novavision.src.base.component import Component
 from sdks.novavision.src.helper.executor import Executor
-from components.BlurringFatima.src.utils.response import build_responseblur
-from components.BlurringFatima.src.models.PackageModel import PackageModel
+from components.GrayExample.src.utils.response import build_responseblur
+from components.GrayExample.src.models.PackageModel import PackageModel
 
 
 class Blur(Component):
@@ -31,7 +31,7 @@ class Blur(Component):
         return cv2.GaussianBlur(img, (self.kernelSize, self.kernelSize), 2)
 
     def blur_median(self, img):
-        return cv2.medianBlur(img, (self.kernelSize))
+        return cv2.medianBlur(img, self.kernelSize)
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
@@ -42,8 +42,6 @@ class Blur(Component):
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_responseblur(context=self)
         return packageModel
-
-
 
 if "__main__" == __name__:
     Executor(sys.argv[1]).run()
