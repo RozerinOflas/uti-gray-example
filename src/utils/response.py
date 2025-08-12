@@ -15,7 +15,7 @@ def build_response(context):
     return packageModel
 
 
-def build_response2(context):
+def build_responseblur(context):
     outputImage = OutputImage(value=context.image)
     blurOutputs = BlurOutputs(outputImage=outputImage)
     blurResponse = BlurResponse(outputs=blurOutputs)
