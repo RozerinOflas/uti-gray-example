@@ -37,15 +37,13 @@ class Blur(Component):
         self.request.model = PackageModel(**(self.request.data))
 
         self.blur_type = self.request.get_param("blurType")
-        self.kernel_size = self.request.get_param("kernel_size", 3)
+        self.kernel_size = int(self.request.get_param("kernel_size", 3))
         self.image = self.request.get_param("inputImage")
 
         if self.blur_type == "Gaussian":
             self.blurr = BlurrGaussian(self.kernel_size)
         elif self.blur_type == "Median":
             self.blurr = BlurrMedian(self.kernel_size)
-        else:
-            self.blurr = None
 
     @staticmethod
     def bootstrap(config: dict) -> dict:

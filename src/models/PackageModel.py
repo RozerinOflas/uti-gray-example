@@ -78,15 +78,23 @@ class Degree(Config):
     class Config:
         title = "Degreee"
 
+class Kernel_size(Config):
+    name: Literal["Kernel_size"] = "Kernel_size"
+    value: int = Field(default=0)
+    type: Literal["number"] = "number"
+    field: Literal["textInput"] = "textInput"
+    class Config:
+        title = "Kernel size"
+
 class Width(Config):
     """
         Positive width input
     """
     name: Literal["Width"] = "Width"
-    value: int = Field(ge=-359.0, le=359.0,default=0)
+    value: int = Field(default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+    #placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
 
     class Config:
         title = "Width"
@@ -95,10 +103,10 @@ class Height(Config):
         Positive height input
     """
     name: Literal["Height"] = "Height"
-    value: int = Field(ge=-359.0, le=359.0,default=0)
+    value: int = Field(default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
-    placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
+    #placeHolder: Literal["[-359, 359]"] = "[-359, 359]"
 
     class Config:
         title = "Height"
@@ -155,6 +163,7 @@ class BlurrGaussian(Config):
 
     class Config:
         title = "BlurrGaussian"
+
 class BlurTypes(Config):
     name: Literal["BlurTypes"] = "BlurTypes"
     value: Union[BlurrGaussian, BlurrMedian]
@@ -190,6 +199,8 @@ class BlurInputs(Inputs):
     inputImage: InputImage
 class BlurConfigs(Configs):
     blurTypes:BlurTypes
+    kernelSize:Kernel_size
+
 class BlurRequest(Request):
     inputs: Optional[BlurInputs]
     configs: BlurConfigs
