@@ -12,20 +12,20 @@ from components.GrayExample.src.models.PackageModel import PackageModel
 
 
 class BlurrGaussian:
-    def __init__(self, KernelSize=3):
-        if KernelSize % 2 == 0:
-            KernelSize += 1
-        self.KernelSize = KernelSize
+    def __init__(self, kernelSize=3):
+        if kernelSize % 2 == 0:
+            kernelSize += 1
+        self.KernelSize = kernelSize
 
     def apply(self, img):
-        return cv2.GaussianBlur(img, (self.KernelSize, self.KernelSize), 0)
+        return cv2.GaussianBlur(img, (self.kernelSize, self.kernelSize), 0)
 
 
 class BlurrMedian:
-    def __init__(self, KernelSize=3):
-        if KernelSize % 2 == 0:
-            KernelSize += 1
-        self.KernelSize = KernelSize
+    def __init__(self, kernelSize=3):
+        if kernelSize % 2 == 0:
+            kernelSize += 1
+        self.KernelSize = kernelSize
 
     def apply(self, img):
         return cv2.medianBlur(img, self.KernelSize)
@@ -49,7 +49,7 @@ class Blur(Component):
     def bootstrap(config: dict) -> dict:
         return {}
 
-    def bluring(self, img):
+    def blur(self, img):
         if self.blurr:
             return self.blurr.apply(img)
         else:
