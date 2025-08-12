@@ -29,14 +29,15 @@ class Scalling(Component):
         return {}
 
     def scaling(self, image):
-        if isinstance(image, str):
-            img_data = base64.b64decode(image)
-            np_arr = np.frombuffer(img_data, np.uint8)
-            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        resized = cv2.resize(image, (self.width, self.height))
-        _, buffer = cv2.imencode(".jpg", resized)
-        return base64.b64encode(buffer).decode("utf-8")
-        #return cv2.resize(image, (self.width, self.height))
+        def scaling(self, image):
+            if isinstance(image, str):
+                img_data = base64.b64decode(image)
+                np_arr = np.frombuffer(img_data, np.uint8)
+                image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+            resized = cv2.resize(image, (self.width, self.height))
+            _, buffer = cv2.imencode(".jpg", resized)
+            return base64.b64encode(buffer).decode("utf-8")
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
