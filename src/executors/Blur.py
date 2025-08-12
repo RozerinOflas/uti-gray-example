@@ -12,23 +12,23 @@ from components.GrayExample.src.models.PackageModel import PackageModel
 
 
 class BlurrGaussian:
-    def __init__(self, kernel_size=3):
-        if kernel_size % 2 == 0:
-            kernel_size += 1
-        self.kernel_size = kernel_size
+    def __init__(self, KernelSize=3):
+        if KernelSize % 2 == 0:
+            KernelSize += 1
+        self.KernelSize = KernelSize
 
     def apply(self, img):
-        return cv2.GaussianBlur(img, (self.kernel_size, self.kernel_size), 0)
+        return cv2.GaussianBlur(img, (self.KernelSize, self.KernelSize), 0)
 
 
 class BlurrMedian:
-    def __init__(self, kernel_size=3):
-        if kernel_size % 2 == 0:
-            kernel_size += 1
-        self.kernel_size = kernel_size
+    def __init__(self, KernelSize=3):
+        if KernelSize % 2 == 0:
+            KernelSize += 1
+        self.KernelSize = KernelSize
 
     def apply(self, img):
-        return cv2.medianBlur(img, self.kernel_size)
+        return cv2.medianBlur(img, self.KernelSize)
 
 
 class Blur(Component):
@@ -37,13 +37,13 @@ class Blur(Component):
         self.request.model = PackageModel(**(self.request.data))
 
         self.blur_type = self.request.get_param("blurType")
-        self.kernel_size = int(self.request.get_param("kernel_size", 3))
+        self.KernelSize = int(self.request.get_param("KernelSize", 3))
         self.image = self.request.get_param("inputImage")
 
         if self.blur_type == "Gaussian":
-            self.blurr = BlurrGaussian(self.kernel_size)
+            self.blurr = BlurrGaussian(self.KernelSize)
         elif self.blur_type == "Median":
-            self.blurr = BlurrMedian(self.kernel_size)
+            self.blurr = BlurrMedian(self.KernelSize)
 
     @staticmethod
     def bootstrap(config: dict) -> dict:

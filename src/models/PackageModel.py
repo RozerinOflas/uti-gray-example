@@ -78,13 +78,13 @@ class Degree(Config):
     class Config:
         title = "Degreee"
 
-class Kernel_size(Config):
-    name: Literal["Kernel_size"] = "Kernel_size"
+class KernelSize(Config):
+    name: Literal["KernelSize"] = "KernelSize"
     value: int = Field(default=0)
     type: Literal["number"] = "number"
     field: Literal["textInput"] = "textInput"
     class Config:
-        title = "Kernel size"
+        title = "KernelSize"
 
 class Width(Config):
     """
@@ -199,7 +199,7 @@ class BlurInputs(Inputs):
     inputImage: InputImage
 class BlurConfigs(Configs):
     blurTypes:BlurTypes
-    kernelSize:Kernel_size
+    kernelSize:KernelSize
 
 class BlurRequest(Request):
     inputs: Optional[BlurInputs]
