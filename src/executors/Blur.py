@@ -32,18 +32,36 @@ class Blur(Component):
     @staticmethod
     def bootstrap(config: dict) -> dict:
         return {}
-    def blur(self,kernelSize, sigmaX, image):
+    def blur(self,kernelSize, sigmaX, image, blurTypes):
         if self.blurTypes == "gaussian":
             return cv2.GaussianBlur(image, (kernelSize, kernelSize), sigmaX).astype(np.uint8)
         elif self.blurTypes == "median":
             return cv2.medianBlur(image, kernelSize).astype(np.uint8)
+        else:
+            raise ValueError(f"Unknown blurType: {blurTypes}")
 
     def run(self):
-        img= Image.get_frame(self.image, redis_db=self.redis_db)
-        img.value=self.blur(img.value)
+        img = Image.get_frame(self.image, redis_db=self.redis_db)
+        # KernelSize string'den int'e çevirme (örn. "Kernel3x3" -> 3)
+        if isinstance(self.kernelSize, str) and self.kernelSize.lower().startswith("kernel"):
+            try:
+                kernel_size_int = int(self.kernelSize[-3])  # 3, 5, 7 gibi
+            except Exception:
+                kernel_size_int = 3
+        else:
+            kernel_size_int = int(self.kernelSize)
+
+        blurred_img = self.blur(
+            kernel_size_int,
+            int(self.sigmaX),
+            img.value,
+            self.blurTypes.lower()
+        )
+
+        img.value = blurred_img
         self.image = Image.set_frame(img.value, package_uID=self.uID, redis_db=self.redis_db)
-        packageModel = build_responseblur
-        return packageModel
+        response = build_responseblur(self.image)
+        return response
 
     if "__main__" == __name__:
         Executor(sys.argv[1]).run()
