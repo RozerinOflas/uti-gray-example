@@ -17,7 +17,7 @@ class Blur(Component):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
         self.blurTypes = self.request.get_param("BlurTypes")
-        print("self.blurTypes = ", self.blurTypes)
+        self.kernelSize = self.request.get_param("KernelSize")
         self.image = self.request.get_param("inputImage")
     @staticmethod
     def bootstrap(config: dict) -> dict:
@@ -25,9 +25,9 @@ class Blur(Component):
 
     def Bluring(self, img):
         if self.blurTypes == "BlurrGaussian":
-            img = cv2.GaussianBlur(img, (5, 5), 0)
+            img = cv2.GaussianBlur(img, (self.kernelSize,self.kernelSize), 0)
         elif self.blurTypes == "BlurrMedian":
-            img = cv2.medianBlur(img, 5)
+            img = cv2.medianBlur(img, self.kernelSize)
         return img
 
     def run(self):
