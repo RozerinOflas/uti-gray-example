@@ -1,6 +1,3 @@
-"""
-    It is one of the preprocessing components in which the image is blurred.
-"""
 
 import os
 import cv2
@@ -19,29 +16,27 @@ class Blur(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
-        self.blurTypes=self.request.get_param("blurTypes")
-        self.kernelSize= self.request.get_param("kernelSize")
+        self.blurTypes = self.request.get_param("blurTypes")
+        print("self.blurTypes = ", self.blurTypes)
         self.image = self.request.get_param("inputImage")
-
     @staticmethod
     def bootstrap(config: dict) -> dict:
         return {}
 
-    def blur_gaussian(self, img):
-        return cv2.GaussianBlur(img, (self.kernelSize, self.kernelSize), 2)
-
-    def blur_median(self, img):
-        return cv2.medianBlur(img, self.kernelSize)
+    def Bluring(self,img):
+        if self.blurTypes=="BlurrGaussian":
+            img = cv2.GaussianBlur(img,self.blurTypes)
+        elif self.blurTypes=="BlurrMedian":
+            img = cv2.medianBlur(img,self.blurTypes)
+        return
 
     def run(self):
         img = Image.get_frame(img=self.image, redis_db=self.redis_db)
-        if self.blurTypes.name == "BlurrGaussian":
-            img.value = self.blur_gaussian(img.value)
-        elif self.blurTypes.name == "BlurrMedian":
-            img.value = self.blur_median(img.value)
+        img.value = self.Bluring(img.value)
         self.image = Image.set_frame(img=img, package_uID=self.uID, redis_db=self.redis_db)
         packageModel = build_responseblur(context=self)
         return packageModel
+
 
 if "__main__" == __name__:
     Executor(sys.argv[1]).run()

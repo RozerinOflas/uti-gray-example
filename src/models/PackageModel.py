@@ -77,8 +77,6 @@ class Degree(Config):
     class Config:
         title = "Degreee"
 
-
-
 class KernelSize(Config):
     """"
     KernelSize input
@@ -163,7 +161,6 @@ class BlurrGaussian(Config):
 
     class Config:
         title = "BlurrGaussian"
-
 class BlurTypes(Config):
     name: Literal["BlurTypes"] = "BlurTypes"
     value: Union[BlurrGaussian, BlurrMedian]
@@ -218,11 +215,9 @@ class BlurResponse(Response):
 class ScallingInputs(Inputs):
     inputImage: InputImage
     inputImageA: InputImageA
-
 class ScallingConfigs(Configs):
     width:Width
     height:Height
-
 class ScallingRequest(Request):
     inputs: Optional[ScallingInputs]
     configs: ScallingConfigs
@@ -231,15 +226,11 @@ class ScallingRequest(Request):
         json_schema_extra = {
             "target": "configs"
         }
-
 class ScallingOutputs(Outputs):
     outputImage: OutputImage
     outputImageA: OutputImageA
-
 class ScallingResponse(Response):
     outputs: ScallingOutputs
-
-
 class GrayExampleExecutor(Config):
     name: Literal["GrayExampleExecutor"] = "GrayExampleExecutor"
     value: Union[GrayExampleExecutorRequest, GrayExampleExecutorResponse]
